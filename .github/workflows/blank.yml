@@ -9,22 +9,25 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy-staging:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    environment: 
+      name: staging
+      url: https://staging.myapp.com  # This adds a "View Deployment" button in the UI
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Deploy to Staging
+        run: echo "deploying to staging"
+        env:
+          DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Staging password
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-staging             # Wait for staging to succeed
+    environment: 
+      name: production
+      url: https://myapp.com
+    steps:
+      - name: Deploy to Production
+        run:  echo "deploying to staging"
+        env:
+          DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Prod password automatically
