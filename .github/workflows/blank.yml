@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: Deploy to Staging
         run: echo "deploying to staging with value, $DB_PASS"
-        env:
-          DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Staging password
+        # env:
+        #   DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Staging password
 
   deploy-prod:
     runs-on: ubuntu-latest
