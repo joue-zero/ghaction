@@ -16,7 +16,7 @@ jobs:
       # url: https://staging.myapp.com  # This adds a "View Deployment" button in the UI
     steps:
       - name: Deploy to Staging
-        run: echo "deploying to staging"
+        run: echo "deploying to staging with value, $(DB_PASS)"
         env:
           DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Staging password
 
@@ -28,6 +28,6 @@ jobs:
       # url: https://myapp.com
     steps:
       - name: Deploy to Production
-        run:  echo "deploying to staging"
+        run:  echo "deploying to production with value $(DB_PASS)"
         env:
           DB_PASS: ${{ secrets.DB_PASSWORD }} # Pulls Prod password automatically
